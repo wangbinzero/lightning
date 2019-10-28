@@ -1,0 +1,5 @@
+en:
+  wallet:
+    email_code_verified: message verification code error
+    app_reset_password: reset password
+    set_fund_password: setting password
