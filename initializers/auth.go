@@ -34,14 +34,33 @@ func LoadInterfaces() {
 	}
 }
 
+//api授权
 func Auth(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(context echo.Context) error {
+		params := make(map[string]string)
+		for k, v := range context.QueryParams() {
+			params[k] = v[0]
+		}
+		values, _ := context.FormParams()
+		for k, v := range values {
+			params[k] = v[0]
+		}
+		context.Set("params", params)
+		var currentInterface ApiInterface
+		for _, apiInterface := range GlobalApiInterfaces {
+			if context.Path() == apiInterface.Path && context.Request().Method == apiInterface.Method {
+				currentInterface = apiInterface
+				if currentInterface.LimitTrafficWithEmail && LimitTrafficWithEmail(context) != true {
+					return
+				}
+			}
+		}
 
 	}
 }
 
-//语言选择
-func chooseLanguage(content echo.Context) {
-	var language string
-	var lqs []local.L
-}
+//TODO 语言选择
+//func chooseLanguage(content echo.Context) {
+//	var language string
+//	var lqs []local
+//}
