@@ -38,12 +38,12 @@ func checkSign(context echo.Context, secretKey string, params *map[string]string
 //邮箱限流
 func LimitTrafficWithEmail(context echo.Context) bool {
 
-	return false
+	return true
 }
 
 //IP限流
 func LimitTrafficWithIp(context echo.Context) bool {
-	return false
+	return true
 }
 
 //时间戳校验

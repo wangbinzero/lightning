@@ -4,6 +4,7 @@ import (
 	"github.com/labstack/echo"
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
+	"lightning/utils"
 	"log"
 	"path/filepath"
 )
@@ -46,15 +47,38 @@ func Auth(next echo.HandlerFunc) echo.HandlerFunc {
 			params[k] = v[0]
 		}
 		context.Set("params", params)
-		var currentInterface ApiInterface
+		var currentApiInterface ApiInterface
 		for _, apiInterface := range GlobalApiInterfaces {
 			if context.Path() == apiInterface.Path && context.Request().Method == apiInterface.Method {
-				currentInterface = apiInterface
-				if currentInterface.LimitTrafficWithEmail && LimitTrafficWithEmail(context) != true {
-					return
+				currentApiInterface = apiInterface
+				if currentApiInterface.LimitTrafficWithEmail && LimitTrafficWithEmail(context) != true {
+					return utils.BuildError("3043")
+				}
+
+				//TODO limit_with_ip
+
+				if apiInterface.Auth != true {
+					return next(context)
 				}
 			}
 		}
+
+		if currentApiInterface.Path==""{
+			return utils.BuildError("3025")
+		}
+		if context.Request().Header.Get("Authorization")==""{
+			return utils.BuildError("4001")
+		}
+		if currentApiInterface.CheckTimestamp&&checkTimestamp(context,&params)==false{
+			return utils.BuildError("3050")
+		}
+		//TODO 校验 MQ 连接
+		//if currentApiInterface.IsRabbitMqConnected&&!Isra
+
+		db:=utils.MainDbBegin()
+		defer db.DbRollback()
+		var
+		return nil
 
 	}
 }
