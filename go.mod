@@ -5,12 +5,12 @@ go 1.13
 require (
 	github.com/andybalholm/cascadia v1.1.0 // indirect
 	github.com/asaskevich/govalidator v0.0.0-20190424111038-f61b66f89f4a // indirect
-	github.com/aws/aws-sdk-go v1.25.19 // indirect
+	github.com/aws/aws-sdk-go v1.34.0 // indirect
 	github.com/dafiti/echo-middleware v0.0.0-20180423194757-e57a87d075ea
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
 	github.com/disintegration/imaging v1.6.1 // indirect
 	github.com/fatih/color v1.7.0 // indirect
-	github.com/go-sql-driver/mysql v1.4.1
+	github.com/go-sql-driver/mysql v1.5.0
 	github.com/gorilla/sessions v1.2.0 // indirect
 	github.com/gosimple/slug v1.9.0 // indirect
 	github.com/jinzhu/configor v1.1.1 // indirect
